@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+   <title>Лаба 2</title><script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script> 
+    const connect = "http://localhost:3000/search/";
+
+    function start()
+    {
+      zaprosGet();
+    }
+    
+    function zaprosGet()
+    {   
+      console.log("GET");
+      $.ajax({
+        type: "GET",
+        url: connect + document.getElementById('idGET').value,
+        success: function(msg){
+          console.log(msg);
+          console.log(msg.data);
+          var i = 0;
+          document.getElementById('table').innerHTML = "";
+          while (true)
+          {
+            try
+            {
+              var tr = document.createElement("tr");
+              var did = document.createElement("th");
+              did.innerHTML = msg.data[i].id;
+              tr.appendChild(did);
+              var td = document.createElement("td");
+              td.innerHTML = msg.data[i].name;
+              tr.appendChild(td);
+              td = document.createElement("td");
+              td.innerHTML = msg.data[i].origName;
+              tr.appendChild(td);
+              td = document.createElement("td");
+              td.innerHTML = msg.data[i].years;
+              tr.appendChild(td);
+              td = document.createElement("td");
+              td.innerHTML = msg.data[i].genre;
+              tr.appendChild(td);
+              td = document.createElement("td");
+               td.innerHTML=msg.data[i].seasons;
+              tr.appendChild(td);
+              document.getElementById('table').appendChild(tr);
+              i++;
+            }
+            catch
+            {
+              break;
+            }
+          }
+        }
+      });
+    }
+    
+    function zaprosPost()
+    {
+      console.log("POST");
+      if(document.getElementById('idPOST').value == "")
+      {
+        document.getElementById('idPOST').classList.add("is-invalid");
+        return;
+      }
+      else
+      {
+        document.getElementById('idPOST').classList.remove("is-invalid");
+      }
+      var id = parseInt(document.getElementById('idPOST').value);
+      $.ajax({
+        type: "POST",
+        url: connect,
+        
+        data: "id="+ id +"&name=" + document.getElementById('namePOST').value + "&origName=" + document.getElementById('origNamePOST').value + "&years="+ document.getElementById('yearsPOST').value + "&genre=" + document.getElementById('genrePOST').value  + "&seasons=" + document.getElementById('seasonsPOST').value,
+        success: function(msg){
+          console.log(msg);
+          zaprosGet();
+        }
+      });
+    }
+    
+    function zaprosPut()
+    {
+      console.log("PUT");
+      if(document.getElementById('idPUT').value == "")
+      {
+        document.getElementById('idPUT').classList.add("is-invalid");
+        return;
+      }
+      else
+      {
+        document.getElementById('idPUT').classList.remove("is-invalid");
+      }
+      var id = parseInt(document.getElementById('idPUT').value);
+      $.ajax({
+        type: "PUT",
+        url: connect + id,
+        
+        data: "id="+ id +"&name=" + document.getElementById('namePUT').value + "&origName=" + document.getElementById('origNamePUT').value + "&years="+ document.getElementById('yearsPUT').value + "&genre=" + document.getElementById('genrePUT').value + "&seasons=" + document.getElementById('seasonsPUT').value,
+        success: function(msg){
+          console.log(msg);
+          zaprosGet();
+        }
+      });
+    }
+    
+    function zaprosDelete()
+    {
+      console.log("DELETE");
+      $.ajax({
+        type: "DELETE",
+        url: connect + document.getElementById('idDELETE').value,
+        success: function(msg){
+          console.log(msg);
+          zaprosGet();
+        }
+      });
+    }
+    
+    function methodChanged()
+    {
+      switch(document.getElementById('methods').value)
+      {
+        case '1':
+          document.getElementById('formGet').style.display = "inline";
+          document.getElementById('formPost').style.display = "none";
+          document.getElementById('formPut').style.display = "none";
+          document.getElementById('formDelete').style.display = "none";
+          break;
+        case '2':
+          document.getElementById('formGet').style.display = "none";
+          document.getElementById('formPost').style.display = "inline";
+          document.getElementById('formPut').style.display = "none";
+          document.getElementById('formDelete').style.display = "none";
+          break;
+        case '3':
+          document.getElementById('formGet').style.display = "none";
+          document.getElementById('formPost').style.display = "none";
+          document.getElementById('formPut').style.display = "inline";
+          document.getElementById('formDelete').style.display = "none";
+          break;
+        case '4':
+          document.getElementById('formGet').style.display = "none";
+          document.getElementById('formPost').style.display = "none";
+          document.getElementById('formPut').style.display = "none";
+          document.getElementById('formDelete').style.display = "inline";
+          break;
+        default:
+          document.getElementById('formGet').style.display = "inline";
+          document.getElementById('formPost').style.display = "none";
+          document.getElementById('formPut').style.display = "none";
+          document.getElementById('formDelete').style.display = "none";
+          break;
+      }
+    }</script>
+	<style>
+		.card
+		{
+			background-color: rgb(170, 98, 98);
+		}
+		.centered {
+  display: grid;
+  
+  justify-content: center;
+  width: 400px;
+}
+	</style>
+</head>
+<body style=" background-image: url(https://wallpaperboat.com/wp-content/uploads/2020/04/aesthetic-anime-wallpaper-image.jpg); background-size: 100%; background-position: top;
+margin: auto;"class="body" onload="zaprosGet()">
+
+
+<div  class="div centered" style="margin: 20px auto ; border-radius: 100px;" >
+	<div class="input-group mb-3" >
+    <label class="input-group-text" for="inputGroupSelect01">Запросы</label>
+    <select class="form-select" id="methods" onchange="methodChanged()">
+      <option selected value="1">Поиск</option>
+      <option value="2">Добавление</option>
+      <option value="3">Изменение</option>
+      <option value="4">Удаление</option>
+    </select>
+    </div>
+    <div id="formGet">
+    <div class="form-floating mb-3">
+      <input type="number" class="form-control" id="idGET" placeholder="1">
+      <label for="idGET">Код</label>
+    </div>
+    <div class="form-floating mb-3" style="text-align: center;">
+      <button class="btn " style="text-align: center; color: white; background: #000000;"  onclick="zaprosGet()">Найти</button>
+    </div>
+  </div>
+ <div id="formPost" style="display: none;">
+    <div class="form-floating mb-3 required">
+      <input type="number" class="form-control " id="idPOST" placeholder="1">
+      <label for="idPOST">Код</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="namePOST" placeholder="1">
+      <label for="namePOST">Название</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="origNamePOST" placeholder="1">
+      <label for="origNamePOST">Оригинальное название</label>
+    </div>
+      <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="yearsPOST" placeholder="1">
+      <label for="yearsPOST">Годы выхода</label>
+      </div>
+      <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="genrePOST" placeholder="1">
+      <label for="genrePOST">Жанр</label>
+      </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="seasonsPOST" placeholder="1">
+      <label for="seasonsPOST">Количество сезонов</label>
+    </div>
+    <div class="form-floating mb-3" style="text-align: center;">
+      <button class="btn " style="text-align: center; color: white; background: #000000;" onclick="zaprosPost()">Добавить</button>
+    </div>
+  </div>
+
+  <div id="formPut" style="display: none;">
+    <div class="form-floating mb-3">
+      <input type="number" class="form-control " id="idPUT" placeholder="1">
+      <label for="idPUT">Код</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="namePUT" placeholder="1">
+      <label for="namePUT">Название</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="origNamePUT" placeholder="1">
+      <label for="origNamePUT">Оригинально название</label>
+    </div>
+      <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="yearsPUT" placeholder="1">
+      <label for="yearsPOST">Годы выхода</label>
+      </div>
+      <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="genrePUT" placeholder="1">
+      <label for="genrePOST">Жанр</label>
+      </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="seasonsPUT" placeholder="1">
+      <label for="seasonsPUT">Количество сезонов</label>
+    </div>
+    <div class="form-floating mb-3" style="text-align: center;">
+      <button class="btn " style="text-align: center; color: rgb(255, 255, 255); background: #000000;" onclick="zaprosPut()">Изменить</button>
+    </div>
+  </div>
+
+  <div id="formDelete" style="display: none;">
+    <div class="form-floating mb-3">
+      <input type="number" class="form-control" id="idDELETE" placeholder="1">
+      <label for="idGET">Код</label>
+    </div>
+    <div class="form-floating mb-3" style="text-align: center;">
+      <button class="btn " style="text-align: center; color: rgb(255, 255, 255); background: #000000;" onclick="zaprosDelete()">Удалить</button>
+    </div>
+  </div>
+     
+</div>  
+
+<div style="margin: 30px auto; ">
+  <table class="table " style = "color: #000000; border-color: #000000; --bs-table-bg: rgb(0 0 0 / 15%);">
+    <thead>
+      <tr>
+        <th scope="col">Код</th>
+        <th scope="col">Название</th>
+        <th scope="col">Оригинальное название</th>
+        <th scope="col">Жанр</th>
+        <th scope="col">Годы выхода</th>
+        <th scope="col">Количество сезонов</th>
+      </tr>
+    </thead>
+    <tbody id="table" >
+      
+    </tbody>
+  </table>
+  </div> 
+</body>
+</html>

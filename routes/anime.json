@@ -1,0 +1,54 @@
+{
+
+    "data": [
+        {
+    "id": 1,
+    "name": "Атака Титанов",
+    "origName": "Shingeki no kyojin",
+    "years": "2013 - ... ",
+    "genre": "фэнтези",
+    "seasons": "4 сезона"
+},
+{
+    "id": 2,
+    "name": "Токийский гуль",
+    "origName": "Tokyo Ghoul",
+    "years": "2014 - 2018",
+    "genre": "ужасы",
+    "seasons": "4 сезона"
+},
+{
+    "id": 3,
+    "name": "Реинкарнация безработного",
+    "origName": "Mushoku Tensei: Isekai Ittara Honki Dasu",
+    "years": "2021 - ...",
+    "genre": "приключения",
+    "seasons": "1 сезон"
+
+},
+{
+    "id": 4,
+    "name": "Магическая битва",
+    "origName": "Jujutsu Kaisen",
+    "years": "2020 - ...",
+    "genre": "боевик",
+    "seasons": "1 сезон"
+},
+{
+    "id": 5,
+    "name": "Черный клевер",
+    "origName": "Black Clover",
+    "years": "2017 - ...",
+    "genre": "фэнтези",
+    "seasons": "1 сезон"
+},
+{
+    "id": 6,
+    "name": "Дороро",
+    "origName": "Dororo",
+    "years": "2019 - 2019",
+    "genre": "боевик",
+    "seasons": "1 сезон"
+}
+    ]
+}
